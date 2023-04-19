@@ -128,7 +128,7 @@ public class AFD {
 	}
 
 	private void llenarTabla() {
-
+		tablaTransicion = new int[estados][alfabeto.length];
 		String[] estadosCaracteres;
 		for (int r = 0; r < estados; r++) {
 			estadosCaracteres = archivo.caracteresEnLinea();
