@@ -1,5 +1,8 @@
 package expresionesRegulares.TDA;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class AFD {
 	private Archivo archivo;
 	private char[] alfabeto;
@@ -64,11 +67,63 @@ public class AFD {
 		}
 	}
 
+	private void validarAlfabeto() throws Exception {
+		Pattern patron = Pattern.compile("^[a-z|A-Z|0-9]|.$");
+		String s;
+		for (int i = 0; i < alfabeto.length; i++) {
+			s = Character.toString(alfabeto[i]);
+			Matcher m = patron.matcher(s);
+			if (!m.matches()) {
+				throw new Exception("Automata mal definido, el alfabeto solo debe contener caracteres");
+			}
+			for (int j = 0; j < alfabeto.length; j++) {
+				if (i != j) {
+					if (alfabeto[i] == alfabeto[j]) {
+						throw new Exception("Automata mal definicio, el alfabeto contiene caracteres repetidos");
+					}
+				} else {
+					continue;
+				}
+
+			}
+		}
+	}
+
+	public void validarEstados() throws Exception {
+		Pattern patron = Pattern.compile("^[0-9]+$");
+		String s = Integer.toString(estados);
+		Matcher m = patron.matcher(s);
+		if (!m.matches()) {
+			throw new Exception("Automata mal definido, Q debe ser un numero entero");
+		}
+		if (estados < 2) {
+			throw new Exception("Automata mal definido, Q debe ser mayor que 2 ");
+		}
+	}
+
 	private void llenarEstadosAceptacion() {
 		String[] estados = archivo.caracteresEnLinea();
 		this.estadosFinales = new int[estados.length];
 		for (int i = 0; i < estados.length; i++) {
 			estadosFinales[i] = Integer.parseInt(estados[i]);
+		}
+	}
+
+	private void validarEstadosAceptacion() throws Exception {
+		Pattern patron = Pattern.compile("^[0-9]+$");
+		String s;
+		for (int i = 0; i < estadosFinales.length; i++) {
+			s = Integer.toString(estadosFinales[i]);
+			Matcher m = patron.matcher(s);
+			if (!m.matches()) {
+				throw new Exception("Automata mal definido, los estados finales deben ser representados con enteros");
+			}
+			if (estadosFinales[i] >= estados) {
+				throw new Exception("Automata mal definido, solo existen " + estados + " estados");
+			}
+			if (estadosFinales[i] < 0) {
+				throw new Exception("Automata mal definido, los estados no pueden ser negativos");
+			}
 		}
 	}
 
