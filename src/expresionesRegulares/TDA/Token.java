@@ -1,26 +1,15 @@
 
 package expresionesRegulares.TDA;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 public class Token {
 	// Los tokens se componen de un nombre y un patrón.
-	private String er;
+	private AFD patron;
 	private String nombre;
 
 	// El usuario define el patrón y el nombre.
-	public Token(String er, String nombre) {
-		this.er = er;
+	public Token(String archivo, String nombre) {
+		this.patron = new AFD(archivo);
 		this.nombre = nombre;
-	}
-
-	public String getER() {
-		return er;
-	}
-
-	public void setER(String er) {
-		this.er = er;
 	}
 
 	public String getNombre() {
@@ -36,17 +25,31 @@ public class Token {
 	 * nombre, si no, regresa una excepción.
 	 */
 	public String validar(String cadena) throws Exception {
-		Pattern pattern = Pattern.compile(getER());
-		Matcher matcher = pattern.matcher(cadena);
-		if (matcher.matches()) {
-			return nombre;
+		boolean aceptada = false;
+		int estado = 0;
+		for (int c = 0; c < cadena.length(); c++) {
+			int i;
+			for (i = 0; i < patron.getAlfabeto().length; i++) {
+				if (cadena.charAt(c) == patron.getAlfabeto()[i]) {
+					break;
+				}
+			}
+			estado = patron.getTablaTransicion()[estado][i];
+		}
+		for (int j = 0; j < patron.getEstadosFinales().length; j++) {
+			if (estado == patron.getEstadosFinales()[j]) {
+				aceptada = true;
+			}
+		}
+		if (aceptada) {
+			return this.nombre;
 		} else {
-			throw new Exception("La cadena no corresponde a la cadena.");
+			throw new Exception("Palabra rechazada");
 		}
 	}
 
 	// Imprime la información de los datos de un token.
 	public String toString() {
-		return "Token [Nombre = " + nombre + ", Patrón = " + er + "]";
+		return "Token [Nombre = " + nombre + "]";
 	}
 }
