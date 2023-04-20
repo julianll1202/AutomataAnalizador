@@ -53,9 +53,23 @@ public class AFD {
 	public AFD(String arch) {
 		this.archivo = new Archivo(arch);
 		llenarAlfabeto();
-		this.estados = Integer.parseInt(archivo.caracteresEnLinea()[0]);
+		llenarEstados();
 		llenarEstadosAceptacion();
-		llenarTabla();
+		try {
+			llenarTabla();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+
+	public void llenarEstados() {
+		this.estados = Integer.parseInt(archivo.caracteresEnLinea()[0]);
+		try {
+			validarEstados();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+
 	}
 
 	private void llenarAlfabeto() {
@@ -64,6 +78,11 @@ public class AFD {
 		this.alfabeto = new char[caracteres.length];
 		for (int i = 0; i < caracteres.length; i++) {
 			alfabeto[i] = caracteres[i].charAt(0);
+		}
+		try {
+			validarAlfabeto();
+		} catch (Exception e) {
+			System.out.println(e);
 		}
 	}
 
@@ -107,6 +126,11 @@ public class AFD {
 		for (int i = 0; i < estados.length; i++) {
 			estadosFinales[i] = Integer.parseInt(estados[i]);
 		}
+		try {
+			validarEstadosAceptacion();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
 	}
 
 	private void validarEstadosAceptacion() throws Exception {
@@ -127,15 +151,34 @@ public class AFD {
 		}
 	}
 
-	private void llenarTabla() {
+	private void llenarTabla() throws Exception {
 		tablaTransicion = new int[estados][alfabeto.length];
 		String[] estadosCaracteres;
-		for (int r = 0; r < estados; r++) {
+		Pattern patron = Pattern.compile("^[0-9]+$");
+		Matcher m;
+		int r = 0;
+		do {
 			estadosCaracteres = archivo.caracteresEnLinea();
-			for (int c = 0; c < alfabeto.length; c++) {
-				tablaTransicion[r][c] = Integer.parseInt(estadosCaracteres[c]);
+			if (estadosCaracteres.length > alfabeto.length) {
+				throw new Exception(
+						"Automata mal definido, la tabla de transicion contiene mas columnas que caracteres en el alfabeto");
 			}
-
-		}
+			for (int c = 0; c < alfabeto.length; c++) {
+				if (estadosCaracteres[0] == "No hay nada mas") {
+					break;
+				}
+				m = patron.matcher(estadosCaracteres[c]);
+				if (m.matches()) {
+					tablaTransicion[r][c] = Integer.parseInt(estadosCaracteres[c]);
+				} else {
+					throw new Exception("Automata mal definido, los estados deben ser representados por enteros");
+				}
+			}
+			if (r > estados) {
+				throw new Exception(
+						"Automata mal definido, la tabla de transicion contiene mas estados que lo especificado por la quintupla");
+			}
+			r++;
+		} while (estadosCaracteres[0] != "No hay nada mas");
 	}
 }

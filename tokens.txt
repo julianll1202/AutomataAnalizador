@@ -1,0 +1,4 @@
+fin automatas/fin.txt
+funcion automatas/funcion.txt
+funciones automatas/funciones.txt
+inicio automatas/inicio.txt

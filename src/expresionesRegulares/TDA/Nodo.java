@@ -16,8 +16,8 @@ public class Nodo {
 	 * También se puede crear un nodo con un nuevo token ingresando el patrón y el
 	 * nombre.
 	 */
-	public Nodo(String er, String nombre) {
-		dato = new Token(er, nombre);
+	public Nodo(String archivo, String nombre) {
+		dato = new Token(archivo, nombre);
 		this.siguiente = null;
 	}
 

@@ -60,7 +60,7 @@ public class Lista {
 				} catch (Exception e) { // Si no corresponde con el patrón retorna una excepción.
 				}
 				aux = aux.getSiguiente(); // Avanza un elemento en la lista.
-			} while (aux.getSiguiente() != null && token == "ERROR");
+			} while (aux != null && token == "ERROR");
 		}
 		return token; // Puede retornar el nombre del token o un mensaje de error.
 	}
@@ -91,7 +91,7 @@ public class Lista {
 	public void imprimir() {
 		Nodo aux = raiz;
 
-		while (aux.getSiguiente() != null) {
+		while (aux != null) {
 			System.out.println(aux.getDato().toString());
 			aux = aux.getSiguiente();
 		}
