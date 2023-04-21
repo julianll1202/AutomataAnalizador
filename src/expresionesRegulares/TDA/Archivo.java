@@ -95,7 +95,11 @@ public class Archivo {
 			String linea = bffrRd.readLine();
 			if (linea != null) {
 				linea = linea.trim();
-				caracteres = linea.split("[,]");
+				if (linea.equals(",")) {
+					caracteres = linea.split(" ");
+				} else {
+					caracteres = linea.split("[,]");
+				}
 				return caracteres;
 			} else {
 //              En caso de que hayamos llegado al final del archivo, se cierra el buffer

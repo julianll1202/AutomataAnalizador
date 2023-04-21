@@ -1,0 +1,80 @@
+variables :
+variable edad entero
+variable nombre texto
+variable fecha1 fecha
+variable hora1 hora
+variable fechaHora fecha-hora
+variable miRFC rfc
+variable miCURP curp
+variable decimal_1 decimal
+variable grado simbolo
+variable cierto Logico
+variable resta entero
+variable mult entero
+variable div decimal
+variable mod decimal
+
+codigo-principal :
+	inicio .
+		edad = 25
+		nombre = "Juan"
+		validar_edad ( mensaje , edad )
+
+		fecha1 = 18/07/2002
+		hora1 = 10:20
+		fechaHora = 18/07/2002@10:20:55
+		miRFC = ABC680524P76
+		miCURP = PESA020718HBCXLLB1
+		decimal_1 = 10.464
+		grado = '°'
+		cierto = verdadero
+		cierto = 25 < 10
+		cierto = 10 >= 5
+		cierto = 5 <= 10
+
+		resta = 5 - 10
+		mult = 1 * 2
+		div = 2 / 2
+		mod = 2 % 4
+		resta --
+		resta += 5
+		resta -= 2
+		mult *= 2
+		div /= 1
+		mod %= 2
+	fin .
+
+funciones :
+funcion saludar ( nombre )
+	inicio :
+		imprimir ( "Hola, " + nombre + ", me llamo Alexis" )
+		devolver
+	fin :
+
+funcion ciclo_mientras ( cierto )
+	inicio :
+		mientras ( ~ cierto == verdadero _Y_ edad = 25 )
+		imprimir ( edad )
+		cierto = falso
+		si cierto == falso
+		romper
+		devolver
+	fin :
+
+procedimientos :
+procedimiento validar_edad ( mensaje , edad )
+	inicio :
+		#Esto es un comentario:
+		si edad > 18 entonces
+		imprimir ( "Eres mayor de edad" )
+		sino
+		imprimir ( "Eres menor de edad" )
+		saludar ( nombre )
+	fin :
+
+procedimiento ciclo_para ( cierto )
+	inicio :
+		mientras ( edad = 0 _O_ edad <= 15 )
+		para ( edad = 0 ; cierto != verdadero ; edad ++ )
+		imprimir ( edad )
+	fin : °°°°

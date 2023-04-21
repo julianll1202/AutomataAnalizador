@@ -1,0 +1,62 @@
+variables :
+    variable edad entero
+    variable nombre texto
+    variable sexo simbolo
+    variable ampersand simbolo
+    variable mi_curp curp
+    variable mi_rfc rfc
+    variable encontrar Logico
+    variable siempre Logico
+    variable ahora hora
+    variable hoy fecha
+    variable fecha-hora ahorita
+
+codigo-principal :
+inicio .
+# Esto es un comentario
+    edad = 25
+    nombre = "Juan" + "Luna"
+    sexo = 'M'
+    ampersand = '&'
+    mi_curp = LOLJ021206HBCPNLA2
+    rfc mi_rfc = CAPV841211G54
+    encontrar = Falso
+    siempre = verdadero
+    ahora = 10:09:35
+    hoy = 2023-03-08
+    ahorita = 2023-03-08@10:02:40
+    validar_edad ( mensaje , edad )
+fin .
+
+funciones :
+    función saludar ( nombre )
+    inicio :
+        imprimir ( "Hola, como estas" + nombre )
+    fin :
+
+procedimientos :
+    procedimiento validar_edad ( mensaje , edad )
+        inicio :
+            si edad >= 18 entonces
+                imprimir ( "Eres mayor de edad" )
+            sino :
+                imprimir ( "Eres menor de edad" )
+            saludar ( nombre )
+        fin :
+    procedimiento buscar_divisores ( numero )
+        inicio :
+            entero cont = 1
+            para cont < numero :
+                si numero % 1 == 0 :
+                    imprimir ( "El numero " + cont + " es divisor de " + numero )
+                cont ++
+        fin :
+
+    procedimiento busca_juan ( sexo , nombre )
+        inicio :
+            si sexo == 'M' _Y_ nombre == "Juan" entonces :
+                imprimir ( "Eres un hombre y te llamas Juan" )
+            sino :
+                imprimir ( "No te conozco, no eres Juan" )
+        fin :
++ - * / % ++ -- = += -= *= /= %= == != > < >= <= _O_ ~ ,

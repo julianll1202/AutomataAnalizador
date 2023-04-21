@@ -11,8 +11,8 @@ public class ValidarPrograma {
 		 * Se crean nuevos objetos Archivo de los archivos de texto del programa y la
 		 * lista de tokens.
 		 */
-		Archivo programa = new Archivo("E:\\Lenguajes y Autómatas I\\Escritura y lectura de archivos\\programa.txt");
-		Archivo tokensArchivo = new Archivo("E:\\Lenguajes y Autómatas I\\Escritura y lectura de archivos\\tokens.txt");
+		Archivo programa = new Archivo("programa.txt");
+		Archivo tokensArchivo = new Archivo("tokens.txt");
 
 		String[] textoPrograma = programa.leer(); // Se ingresa el contenido del programa en un arreglo.
 
