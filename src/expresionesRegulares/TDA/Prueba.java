@@ -8,7 +8,7 @@ public class Prueba {
 		Archivo tokens = new Archivo("tokens.txt");
 		lista.llenar(tokens);
 		lista.imprimir();
-		System.out.println(lista.validarLexema("funcion"));
+		System.out.println(lista.validarLexema(":"));
 		// Token inicio = new Token("automatas/inicio.txt", "inicio");
 //		Nodo inicio = new Nodo("automatas/inicio.txt", "inicio");
 //		try {

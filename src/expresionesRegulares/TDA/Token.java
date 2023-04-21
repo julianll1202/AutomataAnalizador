@@ -25,26 +25,10 @@ public class Token {
 	 * nombre, si no, regresa una excepción.
 	 */
 	public String validar(String cadena) throws Exception {
-		boolean aceptada = false;
-		int estado = 0;
-		for (int c = 0; c < cadena.length(); c++) {
-			int i;
-			for (i = 0; i < patron.getAlfabeto().length; i++) {
-				if (cadena.charAt(c) == patron.getAlfabeto()[i]) {
-					break;
-				}
-			}
-			estado = patron.getTablaTransicion()[estado][i];
-		}
-		for (int j = 0; j < patron.getEstadosFinales().length; j++) {
-			if (estado == patron.getEstadosFinales()[j]) {
-				aceptada = true;
-			}
-		}
-		if (aceptada) {
+		if (patron.pertenece(cadena)) {
 			return this.nombre;
 		} else {
-			throw new Exception("Palabra rechazada");
+			throw new Exception("La cadena no cumple con el patron");
 		}
 	}
 

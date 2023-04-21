@@ -181,4 +181,27 @@ public class AFD {
 			r++;
 		} while (estadosCaracteres[0] != "No hay nada mas");
 	}
+
+	public boolean pertenece(String cadena) throws Exception {
+		boolean aceptada = false;
+		int estado = 0;
+		for (int c = 0; c < cadena.length(); c++) {
+			int i;
+			for (i = 0; i < alfabeto.length; i++) {
+				if (cadena.charAt(c) == alfabeto[i]) {
+					break;
+				}
+				if (i == (alfabeto.length - 1)) {
+					throw new Exception("Error, el simbolo " + cadena.charAt(c) + " no pertenece al alfabeto");
+				}
+			}
+			estado = tablaTransicion[estado][i];
+		}
+		for (int j = 0; j < estadosFinales.length; j++) {
+			if (estado == estadosFinales[j]) {
+				aceptada = true;
+			}
+		}
+		return aceptada;
+	}
 }
