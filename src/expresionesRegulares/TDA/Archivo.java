@@ -113,4 +113,96 @@ public class Archivo {
 		}
 	}
 
+	public String[] checarCadena(String[] palabras) {
+//      Estas variables marcan el inicio y fin del string, respectivamente
+		int iniciaCad = -1;
+		int finCad = 0;
+		String cadena = "";
+		/*
+		 * Para cada palabra dentro de la linea de texto se checa si empieza con
+		 * comillas dobles pero no termina con ellas, o si es el caracter de comillas
+		 * dobles
+		 */
+		for (int i = 0; i < palabras.length; i++) {
+			if ((palabras[i].startsWith("\"") && !palabras[i].endsWith("\"")) || palabras[i].equals("\"")) {
+				iniciaCad = i;
+//              Si cumple alguna de las condiciones se utiliza la variable cadena para llenarla con el string
+				cadena += palabras[i] + " ";
+//              El proceso de agregar palabras a cadena se repite hasta que lleguemos a otra comilla o se acabe el string
+				for (int j = iniciaCad + 1; j < palabras.length; j++) {
+					cadena += palabras[j] + " ";
+					finCad = j;
+					if (palabras[j].endsWith("\"")) {
+						break;
+					}
+				}
+				break;
+
+			}
+		}
+		if (iniciaCad < 0) {
+			return palabras;
+		}
+		cadena = cadena.trim();
+//      Se crea un nuevo arreglo en el que se agregaran los elementos del arreglo anterior, excepto
+//      los que forman parte de la cadena
+		String[] nuevoPal = new String[palabras.length - (finCad - iniciaCad)];
+		for (int p = 0; p < nuevoPal.length; p++) {
+			if (p == iniciaCad) {
+				nuevoPal[p] = cadena;
+			} else {
+				if (p < iniciaCad) {
+					nuevoPal[p] = palabras[p];
+				} else {
+					finCad++;
+					nuevoPal[p] = palabras[finCad];
+
+				}
+			}
+
+		}
+		return nuevoPal;
+	}
+
+	public String[] checarLinea(String linea) {
+		String[] pal = linea.split(" ");
+		int cont = 0;
+//      Llama al metodo checarCadena() hasta que ya no haya mas strings incompletos
+		do {
+			cont = 0;
+			pal = checarCadena(pal);
+			for (int i = 0; i < pal.length; i++) {
+				if ((pal[i].startsWith("\"") && !pal[i].endsWith("\"")) || pal[i].equals("\"")) {
+					cont++;
+				}
+			}
+		} while (cont > 0);
+		return pal;
+	}
+
+//    Lee una linea de texto de un archivo
+	public String[] palabrasLinea() {
+		try {
+			String[] lineaPalabras;
+			String linea = bffrRd.readLine();
+			if (linea != null) {
+				linea = linea.trim();
+//              Si la linea es un comentario o una linea vacia, se las salta
+				if (linea.startsWith("#") || linea.equals("") || linea.equals(" ")) {
+					return palabrasLinea();
+				}
+				return checarLinea(linea);
+
+			} else {
+//              En caso de que hayamos llegado al final del archivo, se cierra el buffer
+				bffrRd.close();
+				String[] mensaje = { "No hay nada mas" };
+				return mensaje;
+			}
+
+		} catch (IOException ioe) {
+			String[] mensaje = { "Hubo un error de entrada y salida" };
+			return mensaje;
+		}
+	}
 }

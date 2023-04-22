@@ -22,8 +22,8 @@ codigo-principal :
 
 		fecha1 = 18/07/2002
 		hora1 = 10:20
-		fechaHora = 18/07/2002@10:20:55
-		miRFC = ABC680524P76
+		fecha-hora = 18/07/2002@10:20:55
+		miRFC = MELM8305281H0
 		miCURP = PESA020718HBCXLLB1
 		decimal_1 = 10.464
 		grado = '°'
@@ -47,7 +47,7 @@ codigo-principal :
 funciones :
 funcion saludar ( nombre )
 	inicio :
-		imprimir ( "Hola, " + nombre + ", me llamo Alexis" )
+		imprimir ( "Hola " + nombre + " me llamo Alexis" )
 		devolver
 	fin :
 
